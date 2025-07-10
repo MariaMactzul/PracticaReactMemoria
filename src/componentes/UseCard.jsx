@@ -1,20 +1,25 @@
 import { Button, Card } from "react-bootstrap";
 import { useEffect, useState } from "react";
 import './UseCard.css'
+//RECORDATORIO LAS ACTUALIZACIONES DE ESTADO SON FUNCIONES ASINCRONAS, NO SE ACTUALIZAN DE INMEDIATO EL ESTADO
+const UserCard = ({ nombre, role, descripcion, github, img, setVolteadas, volteadas, ocultar, cartas }) => {//Recibimos las propiedades que vamos a utilizar
 
-const UserCard = ({ nombre, role, descripcion, github, img, setVolteadas, volteadas, ocultar, cartas }) => {
+    const [ocultarC, setOcultarC] = useState(ocultar)//Estado local que guarda el valor de la propiedad ocultar de las cards (false o true)
+    // //Segun se haya actualizado el Estado en Baraja de cards
 
-    const [ocultarC, setOcultarC] = useState(ocultar)
-
-    const MoverTarjeta = (value) => {
-        setOcultarC(!ocultarC)
-        setVolteadas([...volteadas, value])
+    const MoverTarjeta = (value) => {//Funcion que nos ayuda Para mover las targetas 
+        setOcultarC(!ocultarC)//Modificamos el Estado de ocultarC, negando su valor actual
+        setVolteadas([...volteadas, value])//Modificamos el arreglo de las tarjetas volteadas ahora sera: el elemento que ya tenia en el arreglo y el nombre de la tarjeta
+        console.log(volteadas,"soy volteadas despues de click") 
         //console.log(volteadas, 'i am volteadas Xd')
     }
-
+   
+//La propiedad ocultar viene desde el componente padre(Baraja), y por lo tanto es controlada externamente
+//ocultarC es un estado local del componente UseCard y es inicializado con el valor de ocultar
     useEffect(() => {
-        if (ocultar != ocultarC) {
-            setTimeout(() => {
+        if (ocultar != ocultarC) {//Solo van a ser diferentes si el usuario dio Click en una tarjeta y 
+        // se realiza la funcion MoverTarjeta Modificando el valor del Estado Local y como ocultar es un props que viene del padre
+            setTimeout(() => {//
                 setOcultarC(ocultar)
             }, 2500)
         }
